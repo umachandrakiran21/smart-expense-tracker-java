@@ -3,7 +3,8 @@ import java.util.ArrayList;
 
 public class FileHandler {
 
-    String fileName = "expenses.txt";
+    String fileName = "../expenses.txt";
+    String budgetFile = "../budget.txt";
 
     // Save Expenses To File
     public void saveExpenses(ArrayList<Expense> expenses) {
@@ -60,5 +61,41 @@ public class FileHandler {
         }
 
         return expenses;
+    }
+
+    // Save Budget
+    public void saveBudget(double budget) {
+
+        try {
+
+            BufferedWriter bw = new BufferedWriter(new FileWriter(budgetFile));
+
+            bw.write(String.valueOf(budget));
+
+            bw.close();
+
+        } catch(Exception e) {
+
+            System.out.println("Error Saving Budget!");
+        }
+    }
+
+    // Load Budget
+    public double loadBudget() {
+
+        try {
+
+            BufferedReader br = new BufferedReader(new FileReader(budgetFile));
+
+            double budget = Double.parseDouble(br.readLine());
+
+            br.close();
+
+            return budget;
+
+        } catch(Exception e) {
+
+            return 0;
+        }
     }
 }

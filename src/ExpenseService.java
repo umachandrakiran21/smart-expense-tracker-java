@@ -4,7 +4,7 @@ public class ExpenseService {
 
     FileHandler fileHandler = new FileHandler();
     ArrayList<Expense> expenses = fileHandler.loadExpenses();
-    double budgetLimit = 0;
+    double budgetLimit = fileHandler.loadBudget();
 
     // Add Expense
     public void addExpense(Expense expense) {
@@ -114,9 +114,12 @@ public void showTotalExpenses() {
     System.out.println("Total Expenses: " + total);
 }
 // Set Budget
+// Set Budget
 public void setBudget(double budget) {
 
     budgetLimit = budget;
+
+    fileHandler.saveBudget(budgetLimit);
 
     System.out.println("Budget Set Successfully!");
 }
