@@ -5,7 +5,12 @@ public class Expense {
     double amount;
     String category;
 
-    // Constructor
+    // Empty Constructor
+    public Expense() {
+
+    }
+
+    // Parameterized Constructor
     public Expense(int id, String title, double amount, String category) {
 
         this.id = id;
@@ -14,13 +19,8 @@ public class Expense {
         this.category = category;
     }
 
-    // Display Expense
     public void displayExpense() {
 
-        System.out.println("ID: " + id);
-        System.out.println("Title: " + title);
-        System.out.println("Amount: " + amount);
-        System.out.println("Category: " + category);
-        System.out.println("---------------------------");
+        System.out.println(id + " " + title + " " + amount + " " + category);
     }
 }

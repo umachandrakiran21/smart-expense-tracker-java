@@ -1,21 +1,31 @@
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
+
 public class ExpenseService {
 
-    FileHandler fileHandler = new FileHandler();
-    ArrayList<Expense> expenses = fileHandler.loadExpenses();
-    double budgetLimit = fileHandler.loadBudget();
+    Connection con;
+    ExpenseDAO dao;
+
+    public ExpenseService() throws Exception {
+
+        con = DBConnection.getConnection();
+
+        dao = new ExpenseDAO(con);
+    }
 
     // Add Expense
-    public void addExpense(Expense expense) {
+    public void addExpense(Expense expense) throws Exception {
 
-        expenses.add(expense);
-        fileHandler.saveExpenses(expenses);
+        dao.addExpense(expense);
+
         System.out.println("Expense Added Successfully!");
     }
 
     // View Expenses
-    public void viewExpenses() {
+    public void viewExpenses() throws Exception {
+
+        ArrayList<Expense> expenses = dao.getAllExpenses();
 
         if(expenses.isEmpty()) {
 
@@ -28,147 +38,87 @@ public class ExpenseService {
             e.displayExpense();
         }
     }
+
     // Delete Expense
-// Delete Expense
-public void deleteExpense(int id) {
+    public void deleteExpense(int id) throws Exception {
 
-    boolean found = false;
+        dao.deleteExpense(id);
 
-    for(int i = 0; i < expenses.size(); i++) {
-
-        if(expenses.get(i).id == id) {
-
-            expenses.remove(i);
-
-            System.out.println("Expense Deleted Successfully!");
-
-            found = true;
-
-            break;
-        }
+        System.out.println("Expense Deleted Successfully!");
     }
 
-    fileHandler.saveExpenses(expenses);
-
-    if(!found) {
-
-        System.out.println("Expense ID Not Found!");
-    }
-}
     // Update Expense
-public void updateExpense(int id, String title, double amount, String category) {
+    public void updateExpense(int id, String title, double amount, String category) throws Exception {
 
-    boolean found = false;
+        dao.updateExpense(id, title, amount, category);
 
-    for(Expense e : expenses) {
+        System.out.println("Expense Updated Successfully!");
+    }
 
-        if(e.id == id) {
+    // Search By Category
+    public void searchByCategory(String category) throws Exception {
 
-            e.title = title;
-            e.amount = amount;
-            e.category = category;
+        ArrayList<Expense> expenses = dao.getAllExpenses();
 
-            System.out.println("Expense Updated Successfully!");
+        boolean found = false;
 
-            found = true;
+        for(Expense e : expenses) {
 
-            break;
+            if(e.category.equalsIgnoreCase(category)) {
+
+                e.displayExpense();
+
+                found = true;
+            }
         }
-    }
-    fileHandler.saveExpenses(expenses);
-    if(!found) {
 
-        System.out.println("Expense ID Not Found!");
-    }
-    }
-    // Search Expense By Category
-public void searchByCategory(String category) {
+        if(!found) {
 
-    boolean found = false;
-
-    for(Expense e : expenses) {
-
-        if(e.category.equalsIgnoreCase(category)) {
-
-            e.displayExpense();
-
-            found = true;
+            System.out.println("No Expenses Found In This Category!");
         }
     }
 
-    if(!found) {
+    // Total Expenses
+    public void showTotalExpenses() throws Exception {
 
-        System.out.println("No Expenses Found In This Category!");
-    }
-    }
-    // Total Expense Summary
-public void showTotalExpenses() {
+        ArrayList<Expense> expenses = dao.getAllExpenses();
 
-    double total = 0;
+        double total = 0;
 
-    for(Expense e : expenses) {
+        for(Expense e : expenses) {
 
-        total = total + e.amount;
-    }
-
-    System.out.println("Total Expenses: " + total);
-}
-// Set Budget
-// Set Budget
-public void setBudget(double budget) {
-
-    budgetLimit = budget;
-
-    fileHandler.saveBudget(budgetLimit);
-
-    System.out.println("Budget Set Successfully!");
-}
-// Check Budget
-public void checkBudget() {
-
-    double total = 0;
-
-    for(Expense e : expenses) {
-
-        total = total + e.amount;
-    }
-
-    System.out.println("Budget Limit: " + budgetLimit);
-    System.out.println("Total Expenses: " + total);
-
-    if(total > budgetLimit) {
-
-        System.out.println("Warning! Budget Exceeded!");
-    }
-    else {
-
-        System.out.println("You Are Within Budget.");
-    }
-}
-// Category Wise Report
-public void categoryReport() {
-
-    HashMap<String, Double> report = new HashMap<>();
-
-    for(Expense e : expenses) {
-
-        if(report.containsKey(e.category)) {
-
-            double oldAmount = report.get(e.category);
-
-            report.put(e.category, oldAmount + e.amount);
+            total += e.amount;
         }
-        else {
 
-            report.put(e.category, e.amount);
+        System.out.println("Total Expenses: " + total);
+    }
+
+    // Category Report
+    public void categoryReport() throws Exception {
+
+        ArrayList<Expense> expenses = dao.getAllExpenses();
+
+        HashMap<String, Double> report = new HashMap<>();
+
+        for(Expense e : expenses) {
+
+            if(report.containsKey(e.category)) {
+
+                double oldAmount = report.get(e.category);
+
+                report.put(e.category, oldAmount + e.amount);
+            }
+            else {
+
+                report.put(e.category, e.amount);
+            }
+        }
+
+        System.out.println("===== Category Report =====");
+
+        for(String category : report.keySet()) {
+
+            System.out.println(category + " -> " + report.get(category));
         }
     }
-
-    System.out.println("===== Category Report =====");
-
-    for(String category : report.keySet()) {
-
-        System.out.println(category + " -> " + report.get(category));
-    }
-}
 }

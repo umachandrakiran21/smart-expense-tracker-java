@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
 
         Scanner sc = new Scanner(System.in);
 
@@ -13,15 +13,13 @@ public class Main {
             System.out.println("\n===== Smart Expense Tracker =====");
 
             System.out.println("1. Add Expense");
-            System.out.println("2. View Expenses");
-            System.out.println("3.Delete Expenses");
-            System.out.println("4. Update Expense");
-            System.out.println("5. Search By Category");
-            System.out.println("6. Show Total Expenses");
-            System.out.println("7. Set Budget");
-            System.out.println("8. Check Budget");
-            System.out.println("9. Category Report");
-System.out.println("10. Exit");
+System.out.println("2. View Expenses");
+System.out.println("3. Delete Expenses");
+System.out.println("4. Update Expense");
+System.out.println("5. Search By Category");
+System.out.println("6. Show Total Expenses");
+System.out.println("7. Category Report");
+System.out.println("8. Exit");
 
             System.out.print("Enter Choice: ");
 
@@ -98,7 +96,7 @@ System.out.println("10. Exit");
     service.showTotalExpenses();
 
     break;
-    case 7:
+    /*case 7:
 
     System.out.print("Enter Budget Limit: ");
 
@@ -117,16 +115,18 @@ case 8:
 
     service.categoryReport();
 
+    break;*/
+                case 7:
+
+    service.categoryReport();
+
     break;
-                case 10:
 
-                    System.out.println("Thank You!");
-                    System.exit(0);
+case 8:
 
-                default:
-
-                    System.out.println("Invalid Choice!");
-            }
+    System.out.println("Thank You!");
+    System.exit(0);
         }
     }
+}
 }
