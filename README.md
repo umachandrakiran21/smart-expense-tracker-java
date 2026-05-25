@@ -97,16 +97,20 @@ java -cp "lib/*;src" Main
 ## Screenshots
 
 ### Main Menu
-(Add screenshot here)
+
+![Main Menu](screenshots/menu.png)
 
 ### Add Expense
-(Add screenshot here)
+
+![Add Expense](screenshots/add-expense.png)
 
 ### View Expenses
-(Add screenshot here)
+
+![View Expenses](screenshots/view-expenses.png)
 
 ### Database Table
-(Add screenshot here)
+
+![Database Table](screenshots/database.png)
 
 ---
 
