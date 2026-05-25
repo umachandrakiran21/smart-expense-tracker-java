@@ -102,7 +102,7 @@ java -cp "lib/*;src" Main
 
 ### Add Expense
 
-![Add Expense](screenshots/add-expense.png)
+![Add Expense](screenshots/add-expenses.png)
 
 ### View Expenses
 
