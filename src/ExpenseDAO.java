@@ -6,20 +6,20 @@ public class ExpenseDAO {
     Connection con;
 
     public ExpenseDAO(Connection con) {
+
         this.con = con;
     }
 
     // ADD EXPENSE
     public void addExpense(Expense e) throws Exception {
 
-        String sql = "INSERT INTO expenses VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO expenses(title, amount, category) VALUES (?, ?, ?)";
 
         PreparedStatement ps = con.prepareStatement(sql);
 
-        ps.setInt(1, e.id);
-        ps.setString(2, e.title);
-        ps.setDouble(3, e.amount);
-        ps.setString(4, e.category);
+        ps.setString(1, e.title);
+        ps.setDouble(2, e.amount);
+        ps.setString(3, e.category);
 
         ps.executeUpdate();
     }
@@ -41,6 +41,7 @@ public class ExpenseDAO {
             e.title = rs.getString(2);
             e.amount = rs.getDouble(3);
             e.category = rs.getString(4);
+            e.date = rs.getString(5);
 
             list.add(e);
         }

@@ -24,31 +24,27 @@ System.out.println("8. Exit");
             System.out.print("Enter Choice: ");
 
             int ch = sc.nextInt();
-
+            sc.nextLine();
             switch(ch) {
 
                 case 1:
 
-                    System.out.print("Enter Expense ID: ");
-                    int id = sc.nextInt();
-                    sc.nextLine();
+    System.out.print("Enter Title: ");
+    String title = sc.nextLine();
 
-                    System.out.print("Enter Title: ");
-                    String title = sc.nextLine();
+    System.out.print("Enter Amount: ");
+    double amount = sc.nextDouble();
+    sc.nextLine();
 
-                    System.out.print("Enter Amount: ");
-                    double amount = sc.nextDouble();
-                    sc.nextLine();
+    System.out.print("Enter Category: ");
+    String category = sc.nextLine();
 
-                    System.out.print("Enter Category: ");
-                    String category = sc.nextLine();
 
-                    Expense expense = new Expense(id, title, amount, category);
+    Expense expense = new Expense(0, title, amount, category, "");
 
-                    service.addExpense(expense);
+    service.addExpense(expense);
 
-                    break;
-
+    break;
                 case 2:
 
                     service.viewExpenses();

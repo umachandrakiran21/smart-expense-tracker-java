@@ -47,8 +47,8 @@ public class FileHandler {
                 String title = data[1];
                 double amount = Double.parseDouble(data[2]);
                 String category = data[3];
-
-                Expense expense = new Expense(id, title, amount, category);
+                String date=data[4];
+                Expense expense = new Expense(id, title, amount, category,date);
 
                 expenses.add(expense);
             }
