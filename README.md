@@ -126,4 +126,5 @@ java -cp "lib/*;src" Main
 
 ## Author
 
-Uma Chandra Kiran
+Uma Chandra Kiran Gangumalla
+
